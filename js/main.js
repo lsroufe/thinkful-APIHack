@@ -1,11 +1,10 @@
 var swPeople = new Bloodhound({
-	local: ['dog', 'pig', 'moose'],
   datumTokenizer: function(datum) {
     return Bloodhound.tokenizers.whitespace(datum.value);
   },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  prefetch: {
-    url: 'http://swapi.co/api/people/?format=json'
+  remote: {
+    url: 'http://swapi.co/api/people/'
   }
 });
 
@@ -14,9 +13,9 @@ var swFilms = new Bloodhound({
     return Bloodhound.tokenizers.whitespace(datum.value);
   },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  prefetch: {
-    url: 'http://swapi.co/api/films/?format=json'
-  }
+  remote: {
+    url: 'http://swapi.co/api/films/'
+    }
 });
 
 // var swStarships = new Bloodhound({
@@ -48,7 +47,7 @@ $(document).ready(function() {
 	},
 	{
 	  name: 'sw-names',
-	  display: 'name',
+	  display: 'name:1',
 	  source: swPeople,
 	  templates: {
 	    header: '<h3 class="star-wars">Star Wars Characters</h3>'
@@ -56,7 +55,7 @@ $(document).ready(function() {
 	},
 	{
 	  name: 'sw-films',
-	  display: 'title',
+	  display: 'title:1',
 	  source: swFilms,
 	  templates: {
 	    header: '<h3 class="star-wars">Star Wars Films</h3>'
