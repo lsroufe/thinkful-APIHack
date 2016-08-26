@@ -1,24 +1,65 @@
-var searchTags = function(tags) {
+var swPeople = new Bloodhound({
+	local: ['dog', 'pig', 'moose'],
+  datumTokenizer: function(datum) {
+    return Bloodhound.tokenizers.whitespace(datum.value);
+  },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: {
+    url: 'http://swapi.co/api/people/?format=json'
+  }
+});
 
-	var request = {
-		scope: 'public_content',
-		// count: 10,
-		access_token: ''
-	};
+var swFilms = new Bloodhound({
+  datumTokenizer: function(datum) {
+    return Bloodhound.tokenizers.whitespace(datum.value);
+  },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: {
+    url: 'http://swapi.co/api/films/?format=json'
+  }
+});
 
-	$.ajax({
-		url: 'https://api.instagram.com/v1/tags/dogsofinstagram/media/recent',
-		data: request,
-		dataType: "jsonp", //use jsonp to avoid cross origin issues
-	})
-	.done(function (result) {
-		console.log(result);
+// var swStarships = new Bloodhound({
+//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   prefetch: '../data/nhl.json'
+// });
+
+// var swVehicles = new Bloodhound({
+//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   prefetch: '../data/nhl.json'
+// });
+
+// var swSpecies = new Bloodhound({
+//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   prefetch: '../data/nhl.json'
+// });
+
+// var swPlanets = new Bloodhound({
+//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   prefetch: '../data/nhl.json'
+// });
+$(document).ready(function() {
+	$('#multiple-datasets .typeahead').typeahead({
+	  highlight: true
+	},
+	{
+	  name: 'sw-names',
+	  display: 'name',
+	  source: swPeople,
+	  templates: {
+	    header: '<h3 class="star-wars">Star Wars Characters</h3>'
+	  }
+	},
+	{
+	  name: 'sw-films',
+	  display: 'title',
+	  source: swFilms,
+	  templates: {
+	    header: '<h3 class="star-wars">Star Wars Films</h3>'
+	  }
 	});
-
-	var image = "<img src='" + object.link + "'>";
-	result.find('.img-responsive').append(image);
-}
-
-$(document).ready(function(){
-	searchTags('dogsofinstagram');
 });

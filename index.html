@@ -13,24 +13,23 @@
     </head>
     <body>
         <form class="form-inline">
-            <div class="form-group">
-                <label class="sr-only" for="searchTags">Search tags</label>
-                <input type="search" class="form-control" id="searchTags" placeholder="Search tags">
+            <div id="multiple-datasets">
+                <input class="typeahead" type="text" placeholder="Search Star Wars Names">
             </div>
-            <button type="submit" class="btn btn-default">Search</button>
         </form>
         <div class="row">
-            <div class="col-md-6" id="dogs"><img src="..." class="img-responsive" alt="Responsive image"></div>
-            <div class="col-md-6" id="cats"><img src="..." class="img-responsive" alt="Responsive image"></div>
+            <div class="col-md-6" id="results"></div>
         </div>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p></p>
+        <p>Hello Stars</p>
 
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="js/bloodhound.min.js"></script>
+        <script src="js/typeahead.js"></script>
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
