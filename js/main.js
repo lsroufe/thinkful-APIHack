@@ -61,7 +61,9 @@ var getPix = function(term) {
 		'url': url,
 		'data': {
 			'consumer_key' : consumer_key,
-			'image_size' : 1080
+			'image_size' : 1080,
+			'sort' : 'rating',
+			'exclude' : 'nude'
 		}
 	})
 		.done(function(data) {
@@ -101,7 +103,7 @@ $(document).ready(function() {
 	});
 
 	$('#results').html('');
-
+	
 	$('.typeahead').bind('typeahead:select', function(ev, suggestion) {
   	console.log('Selection: ' + suggestion.name);
   	getPix(suggestion.name);
