@@ -12,7 +12,17 @@
 	background: white;
 }
 
-.form-inline {
-	width: 50%;
+form {
+	width: 30%;
 	margin: 0 auto;
+}
+
+.twitter-typeahead {
+	display: block !important;
+}
+
+@media (max-width:750px){
+	form {
+		width:50%;
+	}
 }
