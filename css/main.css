@@ -1,9 +1,18 @@
+#multiple-datasets {
+	text-align: center;
+}
+
 #multiple-datasets .star-wars {
-  margin: 0 20px 5px 20px;
-  padding: 3px 0;
-  border-bottom: 1px solid #ccc;
+	margin: 0 20px 5px 20px;
+    padding: 3px 0;
+    border-bottom: 1px solid #ccc;
 }
 
 .tt-menu {
 	background: white;
+}
+
+.form-inline {
+	width: 50%;
+	margin: 0 auto;
 }
