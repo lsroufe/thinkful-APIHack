@@ -85,6 +85,21 @@ var getPix = function(term) {
  	return image;
  };
 
+var showPeople = function(character) {
+
+	var url = 'http://swapi.co/api/people/';
+
+	$.ajax({
+		'url': url,
+		});
+		
+		$('.panel-title').append(name);
+  	$('#swBody1').append('Birth Year: ' + results.birth_year);
+  	$('#swBody2').append('Height: ' + results.height);
+  	$('#swBody3').append('Mass: ' + results.mass);
+	  
+ }
+
 $(document).ready(function() {
 
 	// initiate the typeahead input field (auto completion)
@@ -112,9 +127,14 @@ $(document).ready(function() {
 	// when a search result is selected
 	$('.typeahead').bind('typeahead:select', function(ev, suggestion) {
   	console.log('Selection: ' + suggestion.name);
-  	$('#results').html('');
-  	getPix(suggestion.name);
-	});
 
-	getPix('Star Wars Luke Skywalker');
+  	$('#results').html('');
+  	$('.panel-title').html('');
+  	$('#swBody1').html('');
+  	$('#swBody2').html('');
+  	$('#swBody3').html('');
+
+  	getPix(suggestion.name);
+  	showPeople(suggestion.name);
+	});
 });
