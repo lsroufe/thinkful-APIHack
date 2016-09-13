@@ -85,20 +85,32 @@ var getPix = function(term) {
  	return image;
  };
 
+var getPlanetName = function(planetUrl) {
+
+	var plantName;
+	$.ajax({
+		'url': planetUrl,
+		async: false
+	})
+	.done(function (response) {
+		plantName = response.name;
+	});
+
+	return plantName;
+}
+
+
 var showPeople = function(character) {
 
-	var url = 'http://swapi.co/api/people/';
+	var homeworld = getPlanetName(character.homeworld);
 
-	$.ajax({
-		'url': url,
-		});
-		
-		$('.panel-title').append(name);
-  	$('#swBody1').append('Birth Year: ' + results.birth_year);
-  	$('#swBody2').append('Height: ' + results.height);
-  	$('#swBody3').append('Mass: ' + results.mass);
+	$('.panel-title').text(character.name);
+	$('#swBody1').html('Homeworld: ' + '<a href="#">' + homeworld + '</a>');
+	// $('#swBody1').text('Birth Year: ' + character.birth_year);
+	$('#swBody2').text('Height: ' + character.height);
+	$('#swBody3').text('Mass: ' + character.mass);
 	  
- }
+ };
 
 $(document).ready(function() {
 
@@ -129,12 +141,8 @@ $(document).ready(function() {
   	console.log('Selection: ' + suggestion.name);
 
   	$('#results').html('');
-  	$('.panel-title').html('');
-  	$('#swBody1').html('');
-  	$('#swBody2').html('');
-  	$('#swBody3').html('');
 
   	getPix(suggestion.name);
-  	showPeople(suggestion.name);
+  	showPeople(suggestion);
 	});
 });
