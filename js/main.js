@@ -87,27 +87,43 @@ var getPix = function(term) {
 
 var getPlanetName = function(planetUrl) {
 
-	var plantName;
+	var planetName;
 	$.ajax({
 		'url': planetUrl,
 		async: false
 	})
 	.done(function (response) {
-		plantName = response.name;
+		planetName = response.name;
 	});
 
-	return plantName;
+	return planetName;
+}
+
+var getFilmName = function(filmUrl) {
+
+	var filmName;
+	$.ajax({
+		'url': filmUrl,
+		async: false
+	})
+	.done(function (response) {
+		filmName = response.name;
+	});
+
+	return filmName;
 }
 
 
 var showPeople = function(character) {
 
 	var homeworld = getPlanetName(character.homeworld);
+	var films = getFilmName(character.films);
 
 	$('.panel-title').text(character.name);
 	$('#swBody1').html('Homeworld: ' + '<a href="#">' + homeworld + '</a>');
+	$('#swBody2').html('Films: ' + '<a href="#">' + films + '</a>');
 	// $('#swBody1').text('Birth Year: ' + character.birth_year);
-	$('#swBody2').text('Height: ' + character.height);
+	// $('#swBody2').text('Height: ' + character.height);
 	$('#swBody3').text('Mass: ' + character.mass);
 	  
  };
