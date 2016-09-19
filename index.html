@@ -9,12 +9,22 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/jquery.typeahead.min.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
         <form>
             <div id="multiple-datasets">
-                <input class="typeahead form-control input-lg" type="text" placeholder="Search Star Wars Names">
+                <div class="typeahead__container">
+                    <div class="typeahead__field">
+                        <span class="typeahead__query">
+                            <input class="js-typeahead" placeholder="Search Star Wars Names"
+                                   name="q"
+                                   type="search"
+                                   autocomplete="off">
+                        </span>
+                    </div>
+                </div>
             </div>
         </form>
         <div class="panel panel-default">
@@ -36,7 +46,7 @@
         <p>Hello Stars</p>
 
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <script src="js/typeahead.bundle.min.js"></script>
+        <script src="js/jquery.typeahead.min.js"></script>
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

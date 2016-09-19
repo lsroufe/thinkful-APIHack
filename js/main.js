@@ -1,83 +1,55 @@
+// // Send request to SWAPI to return all Star Wars Characters
+// var swStarships = new Bloodhound({
+//   datumTokenizer: function(datum) {
+//     return Bloodhound.tokenizers.whitespace(datum.value);
+//   },
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   remote: {
+//     url: 'http://swapi.co/api/starships/',
+//     transform: function(response) {
+//     	return response.results;
+//     }
+//   }
+// });
 
-// Send request to SWAPI to return all Star Wars Characters
-var swPeople = new Bloodhound({
-  datumTokenizer: function(datum) {
-    return Bloodhound.tokenizers.whitespace(datum.value);
-  },
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: 'http://swapi.co/api/people/',
-    transform: function(response) {
-      return response.results;
-    }
-  }
-});
+// var swVehicles = new Bloodhound({
+//   datumTokenizer: function(datum) {
+//     return Bloodhound.tokenizers.whitespace(datum.value);
+//   },
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   remote: {
+//     url: 'http://swapi.co/api/vehicles/',
+//     transform: function(response) {
+//     	return response.results;
+//     }
+//   }
+// });
 
-// Send request to SWAPI to return all Star Wars Films
-var swFilms = new Bloodhound({
-  datumTokenizer: function(datum) {
-    return Bloodhound.tokenizers.whitespace(datum.value);
-  },
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: 'http://swapi.co/api/films/',
-    transform: function(response) {
-    	return response.results;
-    }
-  }
-});
+// var swSpecies = new Bloodhound({
+//   datumTokenizer: function(datum) {
+//     return Bloodhound.tokenizers.whitespace(datum.value);
+//   },
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   remote: {
+//     url: 'http://swapi.co/api/species/',
+//     transform: function(response) {
+//     	return response.results;
+//     }
+//   }
+// });
 
-var swStarships = new Bloodhound({
-  datumTokenizer: function(datum) {
-    return Bloodhound.tokenizers.whitespace(datum.value);
-  },
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: 'http://swapi.co/api/starships/',
-    transform: function(response) {
-    	return response.results;
-    }
-  }
-});
-
-var swVehicles = new Bloodhound({
-  datumTokenizer: function(datum) {
-    return Bloodhound.tokenizers.whitespace(datum.value);
-  },
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: 'http://swapi.co/api/vehicles/',
-    transform: function(response) {
-    	return response.results;
-    }
-  }
-});
-
-var swSpecies = new Bloodhound({
-  datumTokenizer: function(datum) {
-    return Bloodhound.tokenizers.whitespace(datum.value);
-  },
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: 'http://swapi.co/api/species/',
-    transform: function(response) {
-    	return response.results;
-    }
-  }
-});
-
-var swPlanets = new Bloodhound({
-  datumTokenizer: function(datum) {
-    return Bloodhound.tokenizers.whitespace(datum.value);
-  },
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: 'http://swapi.co/api/planets/',
-    transform: function(response) {
-    	return response.results;
-    }
-  }
-});
+// var swPlanets = new Bloodhound({
+//   datumTokenizer: function(datum) {
+//     return Bloodhound.tokenizers.whitespace(datum.value);
+//   },
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+//   remote: {
+//     url: 'http://swapi.co/api/planets/',
+//     transform: function(response) {
+//     	return response.results;
+//     }
+//   }
+// });
 
 // Function to send search term request to 500px API and return 20 images
 var getPix = function(term) {
@@ -209,64 +181,98 @@ var showFilms = function(film) {
 $(document).ready(function() {
 
 	// initiate the typeahead input field (auto completion)
-	$('#multiple-datasets .typeahead').typeahead(
-		{
-		  highlight: true
-		},
-		{
-		  name: 'sw-names',
-		  display: 'name',
-		  source: swPeople,
-		  templates: {
-		    header: '<h3 class="star-wars">Star Wars Characters</h3>'
-		  }
-		},
-		{
-		  name: 'sw-films',
-		  display: 'title',
-		  source: swFilms,
-		  templates: {
-		    header: '<h3 class="star-wars">Star Wars Films</h3>'
-		  }
-		},
-		{
-		 	name: 'sw-starships',
-		 	display: 'name',
-		 	source: swStarships,
-		 	templates: {
-		 	 header: '<h3 class="star-wars">Star Wars Starships</h3>'		
-		  } 
-	});		
+	$.typeahead({
+        input: ".js-typeahead",
+        order: "asc",
+        group: true,
+        cache: true,
+        minLength: 1,
+        hint: true,
+        generateOnLoad: true,
+        source: {
+            Characters: {
+                display: 'name',
+                ajax: {
+                    url: "http://swapi.co/api/people/",
+                    path: "results"
+                }
+            },
+            Films: {
+                display: 'title',
+                ajax: {
+                    url: "http://swapi.co/api/films/",
+                    path: "results"
+                }
+            },
+            Starships: {
+            	display: 'name',
+            	ajax: {
+            		url: "http://swapi.co/api/starships/",
+            		path: "results"
+            	}
+            },
+            Vehicles: {
+            	display: 'name',
+            	ajax: {
+            		url: "http://swapi.co/api/starships/",
+            		path: "results"
+            	}
+            },
+            Species: {
+            	display: 'name',
+            	ajax: {
+            		url: "http://swapi.co/api/species/",
+            		path: "results"
+            	}
+            },
+            Planets: {
+            	display: 'name',
+            	ajax: {
+            		url: "http://swapi.co/api/planets/",
+            		path: "results"
+            	}
+            }
+        },
+        callback: {
+            onInit: function (node) {
+                console.log('Typeahead Initiated on ' + node.selector);
+            },
+            onClick: function(node, a, item) {
+                console.log(item);
+                $('#results').html('');
 
-	// when a search result is selected
-	$('.typeahead').bind('typeahead:select', function(ev, suggestion) {
-		console.log('Selection: ' + suggestion.url);
+				if (item.url.indexOf('people') > -1) {
+					showPeople(item);
+					getPix(item.name);
+				}
+				else if (item.url.indexOf('films') > -1){
+					showFilms(item);
+					getPix(item.title);
+				}
+				else if (item.url.indexOf('starships') > -1){
+					showStarships(item);
+					getPix(item.name);
+				}
+				else if (item.url.indexOf('vehicles') > -1){
+					showVehicles(item);
+					getPix(item.name);
+				}
+				else if (item.url.indexOf('species') > -1){
+					showSpecies(item);
+					getPix(species.name);
+				}
+				else {
+					showPlanets(item);
+					getPix(item.name);
+				}
+			}
 
-		$('#results').html('');
+        }
+    });
 
-		if (suggestion.url.indexOf('people') > -1) {
-			showPeople(suggestion);
-			getPix(suggestion.name);
-		}
-		else if (suggestion.url.indexOf('films') > -1){
-			showFilms(suggestion);
-			getPix(suggestion.title);
-		}
-		else if (suggestion.url.indexOf('starships') > -1){
-			showStarships(suggestion);
-			getPix(suggestion.name);
-		}
-		else if (suggestion.url.indexOf('vehicles') > -1){
-			showVehicles(suggestion);
-			getPix(suggestion.name);
-		}
-		else if (suggestion.url.indexOf('species') > -1){
-			showSpecies(suggestion);
-			getPix(species.name);
-		}
-		else {
-			showPlanets(suggestion);
-			getPix(suggestion.name);
-		}
+	$('.panel').on('click', 'a', function(e, elem){
+		console.log( $(this).text() );
+
 	});
+
 });
