@@ -27,29 +27,57 @@ var swFilms = new Bloodhound({
   }
 });
 
-// var swStarships = new Bloodhound({
-//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-//   queryTokenizer: Bloodhound.tokenizers.whitespace,
-//   prefetch: '../data/nhl.json'
-// });
+var swStarships = new Bloodhound({
+  datumTokenizer: function(datum) {
+    return Bloodhound.tokenizers.whitespace(datum.value);
+  },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: {
+    url: 'http://swapi.co/api/starships/',
+    transform: function(response) {
+    	return response.results;
+    }
+  }
+});
 
-// var swVehicles = new Bloodhound({
-//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-//   queryTokenizer: Bloodhound.tokenizers.whitespace,
-//   prefetch: '../data/nhl.json'
-// });
+var swVehicles = new Bloodhound({
+  datumTokenizer: function(datum) {
+    return Bloodhound.tokenizers.whitespace(datum.value);
+  },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: {
+    url: 'http://swapi.co/api/vehicles/',
+    transform: function(response) {
+    	return response.results;
+    }
+  }
+});
 
-// var swSpecies = new Bloodhound({
-//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-//   queryTokenizer: Bloodhound.tokenizers.whitespace,
-//   prefetch: '../data/nhl.json'
-// });
+var swSpecies = new Bloodhound({
+  datumTokenizer: function(datum) {
+    return Bloodhound.tokenizers.whitespace(datum.value);
+  },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: {
+    url: 'http://swapi.co/api/species/',
+    transform: function(response) {
+    	return response.results;
+    }
+  }
+});
 
-// var swPlanets = new Bloodhound({
-//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-//   queryTokenizer: Bloodhound.tokenizers.whitespace,
-//   prefetch: '../data/nhl.json'
-// });
+var swPlanets = new Bloodhound({
+  datumTokenizer: function(datum) {
+    return Bloodhound.tokenizers.whitespace(datum.value);
+  },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: {
+    url: 'http://swapi.co/api/planets/',
+    transform: function(response) {
+    	return response.results;
+    }
+  }
+});
 
 // Function to send search term request to 500px API and return 20 images
 var getPix = function(term) {
@@ -99,32 +127,82 @@ var getPlanetName = function(planetUrl) {
 	return planetName;
 }
 
-var getFilmName = function(filmUrl) {
+//  eg. filmArray = ['http://swapi.co/api/films/6/',http://swapi.co/api/films/3/,http://swapi.co/api/films/2/,http://swapi.co/api/films/1/,http://swapi.co/api/films/7]
+var getFilmLinks = function(filmArray) {
 
-	var filmName;
-	$.ajax({
-		'url': filmUrl,
-		async: false
-	})
-	.done(function (response) {
-		filmName = response.name;
+	var filmLinks = '';
+
+	$.each(filmArray, function(index, film) {
+		$.ajax({
+			'url' : film,
+			async: false
+		})
+		.done(function(response){
+			if (index == 0) {
+				filmLinks = filmLinks + '<a href="#">' + response.title + '</a>';
+			}
+			else {
+				filmLinks = filmLinks + ', ' + '<a href="#">' + response.title + '</a>';
+			}
+		})
 	});
 
-	return filmName;
+	return filmLinks;
+}
+
+var getStarshipLinks = function(starshipArray) {
+
+	var starshipLinks = '';
+
+	$.each(starshipArray, function(index, starship) {
+		$.ajax({
+			'url' : starship,
+			async: false
+		})
+		.done(function(response){
+			if (index == 0) {
+				starshipLinks = starshipLinks + '<a href="#">' + response.name + '</a>';
+			}
+			else {
+				starshipLinks = starshipLinks + ', ' + '<a href="#">' + response.name + '</a>';
+			}
+		})
+	});
+
+	return starshipLinks;
 }
 
 
 var showPeople = function(character) {
 
 	var homeworld = getPlanetName(character.homeworld);
-	var films = getFilmName(character.films);
+	var filmLinks = getFilmLinks(character.films);
+	var starshipLinks = getStarshipLinks(character.starships);
 
 	$('.panel-title').text(character.name);
 	$('#swBody1').html('Homeworld: ' + '<a href="#">' + homeworld + '</a>');
-	$('#swBody2').html('Films: ' + '<a href="#">' + films + '</a>');
-	// $('#swBody1').text('Birth Year: ' + character.birth_year);
-	// $('#swBody2').text('Height: ' + character.height);
-	$('#swBody3').text('Mass: ' + character.mass);
+	$('#swBody2').html('Films: ' + filmLinks );
+	$('#swBody3').html('Starships: ' + starshipLinks);
+	  
+ };
+
+var showFilms = function(film) {
+
+	
+	$('.panel-title').text(film.title);
+	$('#swBody1').html('Episode: ' + film.episode_id);
+	$('#swBody2').html('Director: ' + film.director );
+	$('#swBody3').html('Producer: ' + film.producer);
+	  
+ };
+
+ var showStarships = function(starship) {
+
+	
+	$('.panel-title').text(starship.name);
+	$('#swBody1').html('Manufacturer: ' + starship.manufacturer);
+	$('#swBody2').html('Model: ' + starship.model );
+	$('#swBody3').html('Starship Class: ' + starship.starship_class);
 	  
  };
 
@@ -150,15 +228,45 @@ $(document).ready(function() {
 		  templates: {
 		    header: '<h3 class="star-wars">Star Wars Films</h3>'
 		  }
-	});
+		},
+		{
+		 	name: 'sw-starships',
+		 	display: 'name',
+		 	source: swStarships,
+		 	templates: {
+		 	 header: '<h3 class="star-wars">Star Wars Starships</h3>'		
+		  } 
+	});		
 
 	// when a search result is selected
 	$('.typeahead').bind('typeahead:select', function(ev, suggestion) {
-  	console.log('Selection: ' + suggestion.name);
+		console.log('Selection: ' + suggestion.url);
 
-  	$('#results').html('');
+		$('#results').html('');
 
-  	getPix(suggestion.name);
-  	showPeople(suggestion);
+		if (suggestion.url.indexOf('people') > -1) {
+			showPeople(suggestion);
+			getPix(suggestion.name);
+		}
+		else if (suggestion.url.indexOf('films') > -1){
+			showFilms(suggestion);
+			getPix(suggestion.title);
+		}
+		else if (suggestion.url.indexOf('starships') > -1){
+			showStarships(suggestion);
+			getPix(suggestion.name);
+		}
+		else if (suggestion.url.indexOf('vehicles') > -1){
+			showVehicles(suggestion);
+			getPix(suggestion.name);
+		}
+		else if (suggestion.url.indexOf('species') > -1){
+			showSpecies(suggestion);
+			getPix(species.name);
+		}
+		else {
+			showPlanets(suggestion);
+			getPix(suggestion.name);
+		}
 	});
 });
