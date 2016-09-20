@@ -1,56 +1,3 @@
-// // Send request to SWAPI to return all Star Wars Characters
-// var swStarships = new Bloodhound({
-//   datumTokenizer: function(datum) {
-//     return Bloodhound.tokenizers.whitespace(datum.value);
-//   },
-//   queryTokenizer: Bloodhound.tokenizers.whitespace,
-//   remote: {
-//     url: 'http://swapi.co/api/starships/',
-//     transform: function(response) {
-//     	return response.results;
-//     }
-//   }
-// });
-
-// var swVehicles = new Bloodhound({
-//   datumTokenizer: function(datum) {
-//     return Bloodhound.tokenizers.whitespace(datum.value);
-//   },
-//   queryTokenizer: Bloodhound.tokenizers.whitespace,
-//   remote: {
-//     url: 'http://swapi.co/api/vehicles/',
-//     transform: function(response) {
-//     	return response.results;
-//     }
-//   }
-// });
-
-// var swSpecies = new Bloodhound({
-//   datumTokenizer: function(datum) {
-//     return Bloodhound.tokenizers.whitespace(datum.value);
-//   },
-//   queryTokenizer: Bloodhound.tokenizers.whitespace,
-//   remote: {
-//     url: 'http://swapi.co/api/species/',
-//     transform: function(response) {
-//     	return response.results;
-//     }
-//   }
-// });
-
-// var swPlanets = new Bloodhound({
-//   datumTokenizer: function(datum) {
-//     return Bloodhound.tokenizers.whitespace(datum.value);
-//   },
-//   queryTokenizer: Bloodhound.tokenizers.whitespace,
-//   remote: {
-//     url: 'http://swapi.co/api/planets/',
-//     transform: function(response) {
-//     	return response.results;
-//     }
-//   }
-// });
-
 // Function to send search term request to 500px API and return 20 images
 var getPix = function(term) {
 
@@ -153,7 +100,7 @@ var showPeople = function(character) {
 
 	$('.panel-title').text(character.name);
 	$('#swBody1').html('Homeworld: ' + '<a href="#">' + homeworld + '</a>');
-	$('#swBody2').html('Films: ' + filmLinks );
+	$('#swBody2').html('Films: ' + filmLinks);
 	$('#swBody3').html('Starships: ' + starshipLinks);
 	  
  };
@@ -163,19 +110,43 @@ var showFilms = function(film) {
 	
 	$('.panel-title').text(film.title);
 	$('#swBody1').html('Episode: ' + film.episode_id);
-	$('#swBody2').html('Director: ' + film.director );
+	$('#swBody2').html('Director: ' + film.director);
 	$('#swBody3').html('Producer: ' + film.producer);
 	  
  };
 
- var showStarships = function(starship) {
+var showStarships = function(starship) {
 
 	
 	$('.panel-title').text(starship.name);
 	$('#swBody1').html('Manufacturer: ' + starship.manufacturer);
-	$('#swBody2').html('Model: ' + starship.model );
+	$('#swBody2').html('Model: ' + starship.model);
 	$('#swBody3').html('Starship Class: ' + starship.starship_class);
 	  
+ };
+
+var showVehicles = function(vehicle) {
+
+ 	$('.panel-title').text(vehicle.name);
+	$('#swBody1').html('Manufacturer: ' + vehicle.manufacturer);
+	$('#swBody2').html('Model: ' + vehicle.model);
+	$('#swBody3').html('Vehicle Class: ' + vehicle.vehicle_class);
+ };
+
+var showSpecies = function(species) {
+
+ 	$('.panel-title').text(species.name);
+	$('#swBody1').html('Language: ' + species.language);
+	$('#swBody2').html('Average Height: ' + species.average_height);
+	$('#swBody3').html('Homeworld: ' + '<a href="#">' + species.homeworld + '</a>');
+ };
+
+var showPlanets = function(planet) {
+
+ 	$('.panel-title').text(planet.name);
+	$('#swBody1').html('Population: ' + planet.population);
+	$('#swBody2').html('Climate: ' + planet.climate);
+	$('#swBody3').html('Terrain: ' + planet.terrain);
  };
 
 $(document).ready(function() {
@@ -259,7 +230,7 @@ $(document).ready(function() {
 				}
 				else if (item.url.indexOf('species') > -1){
 					showSpecies(item);
-					getPix(species.name);
+					getPix(item.name);
 				}
 				else {
 					showPlanets(item);
@@ -270,8 +241,13 @@ $(document).ready(function() {
         }
     });
 
+	// When we click on a result information  e.g. A New Hope  
 	$('.panel').on('click', 'a', function(e, elem){
-		console.log( $(this).text() );
+		console.log($(this).text());
+		//$(this)[0].click('typeahead-js');
+		$('.js-typeahead').val($(this).text());
+				
+		
 
 	});
 
