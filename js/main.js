@@ -46,7 +46,6 @@ var getPlanetName = function(planetUrl) {
 	return planetName;
 }
 
-//  eg. filmArray = ['http://swapi.co/api/films/6/',http://swapi.co/api/films/3/,http://swapi.co/api/films/2/,http://swapi.co/api/films/1/,http://swapi.co/api/films/7]
 var getFilmLinks = function(filmArray) {
 
 	var filmLinks = '';
@@ -151,6 +150,7 @@ var showPlanets = function(planet) {
 
 $(document).ready(function() {
 
+
 	// initiate the typeahead input field (auto completion)
 	$.typeahead({
         input: ".js-typeahead",
@@ -164,42 +164,41 @@ $(document).ready(function() {
             Characters: {
                 display: 'name',
                 ajax: {
-                    url: "http://swapi.co/api/people/",
-                    path: "results"
+                	url: "/api/people.json"
                 }
             },
             Films: {
                 display: 'title',
                 ajax: {
-                    url: "http://swapi.co/api/films/",
+                    url: "/api/films.json",
                     path: "results"
                 }
             },
             Starships: {
             	display: 'name',
             	ajax: {
-            		url: "http://swapi.co/api/starships/",
+            		url: "/api/starships.json",
             		path: "results"
             	}
             },
             Vehicles: {
             	display: 'name',
             	ajax: {
-            		url: "http://swapi.co/api/starships/",
+            		url: "/api/vehicles.json",
             		path: "results"
             	}
             },
             Species: {
             	display: 'name',
             	ajax: {
-            		url: "http://swapi.co/api/species/",
+            		url: "/api/species.json",
             		path: "results"
             	}
             },
             Planets: {
             	display: 'name',
             	ajax: {
-            		url: "http://swapi.co/api/planets/",
+            		url: "/api/planets.json",
             		path: "results"
             	}
             }
@@ -236,18 +235,21 @@ $(document).ready(function() {
 					showPlanets(item);
 					getPix(item.name);
 				}
-			}
+			},
+
 
         }
     });
 
+	
 	// When we click on a result information  e.g. A New Hope  
 	$('.panel').on('click', 'a', function(e, elem){
 		console.log($(this).text());
-		//$(this)[0].click('typeahead-js');
 		$('.js-typeahead').val($(this).text());
-				
-		
+
+		// hack to fake searching and selecting the first result
+		$('.js-typeahead').trigger('input.typeahead');
+		$('.typeahead__item').first().trigger('click');
 
 	});
 
