@@ -164,42 +164,37 @@ $(document).ready(function() {
             Characters: {
                 display: 'name',
                 ajax: {
-                	url: "/api/people.json"
+                	url: "api/people.json"
                 }
             },
             Films: {
                 display: 'title',
                 ajax: {
-                    url: "/api/films.json",
-                    path: "results"
+                    url: "api/films.json"
                 }
             },
             Starships: {
             	display: 'name',
             	ajax: {
-            		url: "/api/starships.json",
-            		path: "results"
+            		url: "api/starships.json"
             	}
             },
             Vehicles: {
             	display: 'name',
             	ajax: {
-            		url: "/api/vehicles.json",
-            		path: "results"
+            		url: "api/vehicles.json"
             	}
             },
             Species: {
             	display: 'name',
             	ajax: {
-            		url: "/api/species.json",
-            		path: "results"
+            		url: "api/species.json"
             	}
             },
             Planets: {
             	display: 'name',
             	ajax: {
-            		url: "/api/planets.json",
-            		path: "results"
+            		url: "api/planets.json"
             	}
             }
         },

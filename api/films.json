@@ -1,8 +1,4 @@
-{
-  "count": 7,
-  "next": null,
-  "previous": null,
-  "results": [
+[
     {
       "title": "A New Hope",
       "episode_id": 4,
@@ -539,4 +535,3 @@
       "url": "http://swapi.co/api/films/7/"
     }
   ]
-}
